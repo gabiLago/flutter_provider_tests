@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_textfield_tests/core/viewmodel/state_viewmodel.dart';
 
 import 'package:provider_textfield_tests/screens/route.dart';
 import 'package:provider_textfield_tests/screens/views/base_view.dart';
 import 'package:provider_textfield_tests/core/viewmodel/profile_viewmodel.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-          builder: (context) => ProfileViewModel(),
-          child:    MyApp(),
-        ) 
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(builder: (context) => ProfileViewModel()),
+      ChangeNotifierProvider(builder: (context) => StateViewModel()),
+    ], child: MyApp()),
   );
 }
 
@@ -24,7 +26,6 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: 'intro',
       onGenerateRoute: Router.generateRoute,
-      
     );
   }
 }
