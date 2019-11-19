@@ -10,66 +10,56 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfile extends State<EditProfile> {
+  final TextEditingController _nameController = TextEditingController();
   String name;
+  final TextEditingController _locationController = TextEditingController();
   String location;
 
   void _save() {
-    FocusScope.of(context).requestFocus(FocusNode());
+    print('_save');
+    Provider.of<ProfileViewModel>(context, listen: false).updateInstrumentsList();
+    //FocusScope.of(context).requestFocus(FocusNode());
     Navigator.pushNamed(context, 'profile');
-    Provider.of<ProfileViewModel>(context, listen: false)
-        .updateProfileName(name: name);
-    Provider.of<ProfileViewModel>(context, listen: false)
-        .updateProfileLocation(friendlyLocation: location);
-    Provider.of<ProfileViewModel>(context, listen: false)
-        .updateInstrumentsList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(builder: (context) => ProfileViewModel()),
-        ChangeNotifierProvider(builder: (context) => StateViewModel()),
-      ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Tests Text Fields'),
-        ),
-        body: Consumer<StateViewModel>(
-          builder: (context, state, child) {
-            return Center(
-              child: Consumer<ProfileViewModel>(
-                builder: (context, data, child) {
-                  
-                  data.getProfile();
-                  name = data.profile.name;
-                  location = data.profile.friendlyLocation;
-
-                  return Column(
-                    children: <Widget>[
-                      TextField(
-                          decoration: InputDecoration.collapsed(
-                            hintText: name,
-                          ),
-                          onChanged: (text) => name = text),
-                      TextField(
-                          decoration: InputDecoration.collapsed(
-                            hintText: location,
-                          ),
-                          onChanged: (text) => location = text),
-                      InstrumentsList(),
-                    ],
-                  );
-                },
-              ),
-            );
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _save,
-          tooltip: 'Save',
-          child: Icon(Icons.save),
-        ),
+    return Container(
+      child: Consumer<ProfileViewModel>(
+        builder: (context, data, child) {
+          data.getProfile();
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Tests Text Fields'),
+            ),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextField(
+                    decoration: InputDecoration(hintText: data.profile.name),
+                    autocorrect: false,
+                    controller: _nameController,
+                    onChanged: (String value) =>
+                        data.updateProfileName(name: value)),
+                TextField(
+                  decoration:
+                      InputDecoration(hintText: data.profile.friendlyLocation),
+                  autocorrect: false,
+                  controller: _locationController,
+                  onChanged: (String value) {
+                    data.updateProfileLocation(friendlyLocation: value);
+                  },
+                ),
+                InstrumentsList(),
+              ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => _save(),
+              tooltip: 'Save',
+              child: Icon(Icons.save),
+            ),
+          );
+        },
       ),
     );
   }

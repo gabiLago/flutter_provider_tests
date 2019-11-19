@@ -17,11 +17,11 @@ class _InstrumentsListState extends State<InstrumentsList> {
     setState(() {
       if (!isSelected) {
         _instrumentsSelected.add(instrument);
+        
       } else {
         _instrumentsSelected.remove(instrument);
       }
-      Provider.of<ProfileViewModel>(context, listen: false)
-          .instrumentsToRemove(instrumentsSelected: _instrumentsSelected);
+      Provider.of<ProfileViewModel>(context, listen: false).instrumentsToRemove(instrumentsSelected: _instrumentsSelected);
     });
   }
 
@@ -29,19 +29,13 @@ class _InstrumentsListState extends State<InstrumentsList> {
   Widget build(BuildContext context) {
     return Consumer<ProfileViewModel>(
       builder: (context, data, child) {
-        List<Widget> list = data.profile.instruments
-                ?.map((instrument) => InstrumentItem(
-                      instrument: instrument,
-                      isSelected: _instrumentsSelected.contains(instrument),
-                      onListChanged: _handleInstrumentChanged,
-                    ))
-                ?.toList() ??
-            [];
-
+         List<Widget> instrumentsList = data.profile.instruments?.map((instrument) => InstrumentItem(instrument: instrument,isSelected: _instrumentsSelected.contains(instrument),
+              onListChanged: _handleInstrumentChanged,))?.toList() ?? [];
+        
         return Wrap(
           spacing: 8.0,
           runSpacing: 4.0,
-          children: list,
+          children: instrumentsList
         );
       },
     );

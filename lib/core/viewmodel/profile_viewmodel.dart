@@ -25,17 +25,15 @@ class ProfileViewModel extends ChangeNotifier {
     profile = _api.getProfileSync();
   }
 
-  List<Widget> getInstruments() {
-    viewState.setState(ViewState.Busy);
-    List<Widget> instruments = profile.instruments.map((String instrument) => Text(instrument)).toList();
-    viewState.setState(ViewState.Idle);    
-    return instruments;    
+  String getName(){
+    return profile.name;
   }
 
   updateProfileLocation({friendlyLocation}) {
     viewState.setState(ViewState.Busy);
     profile.friendlyLocation = friendlyLocation;
     viewState.setState(ViewState.Idle);
+    print('Location: ' + friendlyLocation);
     notifyListeners();
   }
 
@@ -43,13 +41,16 @@ class ProfileViewModel extends ChangeNotifier {
     viewState.setState(ViewState.Busy);
     profile.name = name;
     viewState.setState(ViewState.Idle);
+    print('Name: ' + name);
     notifyListeners();
   }
+
 
   instrumentsToRemove({instrumentsSelected}) {
     viewState.setState(ViewState.Busy);
     instrumentsToRemoveList = instrumentsSelected;
     viewState.setState(ViewState.Idle);
+    print(instrumentsToRemoveList);
     notifyListeners();
   }
 
@@ -57,6 +58,7 @@ class ProfileViewModel extends ChangeNotifier {
     viewState.setState(ViewState.Busy);
     instrumentsToRemoveList.map((String instrument) => profile.instruments.remove(instrument)).toList();
     viewState.setState(ViewState.Idle);
+    print(profile.instruments);
     notifyListeners();
   }
 
