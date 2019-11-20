@@ -15,7 +15,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   initState() {
     super.initState();
-    Provider.of<ProfileViewModel>(context, listen: false).getProfile();
+    Provider.of<ProfileModeViewModel>(context, listen: false).getProfile();
   }
 
   void _switchMode(profileMode) {
@@ -44,17 +44,11 @@ class _ProfileViewState extends State<ProfileView> {
             title: Text('Tests Text Fields'),
           ),
           body: Center(
-            child: Consumer<ProfileViewModel>(
-              builder: (context, state, child) {
-                print(state.getState);
-                return state.getState == ViewState.Idle
-                    ? profileMode.state == ProfileMode.user
-                        ? UserProfile()
-                        : EditProfile()
-                    : CircularProgressIndicator();
-              },
-            ),
-          ),
+              child: profileMode.getState == ViewState.Idle
+                  ? profileMode.state == ProfileMode.user
+                      ? UserProfile()
+                      : EditProfile()
+                  : CircularProgressIndicator()),
           floatingActionButton: FloatingActionButton(
             onPressed: () => _switchMode(profileMode.state),
             tooltip: 'Edit',
@@ -71,7 +65,7 @@ class _ProfileViewState extends State<ProfileView> {
 class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProfileViewModel>(builder: (context, data, child) {
+    return Consumer<ProfileModeViewModel>(builder: (context, data, child) {
       List<Widget> asyncList = data.profile.instruments
               ?.map((instrument) => InstrumentItem(instrument: instrument))
               ?.toList() ??
@@ -106,7 +100,7 @@ class _EditProfile extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Consumer<ProfileViewModel>(
+      child: Consumer<ProfileModeViewModel>(
         builder: (context, data, child) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

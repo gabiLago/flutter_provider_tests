@@ -8,17 +8,18 @@ class ProfileViewModel extends StateViewModel {
   Api _api = Api();
 
   Profile profile = Profile();
-  StateViewModel viewState = StateViewModel();
 
   String test = 'Esto es un test';
 
   Set<String> instrumentsToRemoveList = {};
 
   Future getProfile() async {
-    viewState.setState(ViewState.Busy);
-    await Future.delayed(const Duration(seconds: 4), (){});
+    setState(ViewState.Busy);
+    
+    await Future.delayed(const Duration(seconds: 2), (){});
     profile = await _api.getProfile();
-    viewState.setState(ViewState.Idle);
+    setState(ViewState.Idle);
+    
     notifyListeners();
   } 
 

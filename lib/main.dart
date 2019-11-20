@@ -8,11 +8,7 @@ import 'package:provider_textfield_tests/screens/route.dart';
 
 void main() {
   runApp(
-    MultiProvider(providers: [
-      //ChangeNotifierProvider(builder: (context) => StateViewModel()),
-      ChangeNotifierProvider(builder: (context) => ProfileViewModel()),      
-      ChangeNotifierProvider(builder: (context) => ProfileModeViewModel()),
-    ], child: MyApp()),
+    ChangeNotifierProvider(builder: (context) => ProfileModeViewModel(), child: MyApp()),
   );
 }
 
