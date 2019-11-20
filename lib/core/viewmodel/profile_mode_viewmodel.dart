@@ -9,6 +9,7 @@ class ProfileModeViewModel extends ChangeNotifier {
 
   void setState(ProfileMode profileMode) {
     _profileMode = profileMode;
+    print(_profileMode);
     notifyListeners();
   }
 }

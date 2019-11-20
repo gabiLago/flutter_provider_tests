@@ -12,6 +12,12 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  @override
+  initState() {
+    super.initState();
+    Provider.of<ProfileViewModel>(context, listen: false).getProfile();
+  }
+
   void _switchMode(profileMode) {
     if (profileMode == ProfileMode.edit) _save();
     profileMode == ProfileMode.user
@@ -38,18 +44,14 @@ class _ProfileViewState extends State<ProfileView> {
             title: Text('Tests Text Fields'),
           ),
           body: Center(
-            child: Consumer<StateViewModel>(
+            child: Consumer<ProfileViewModel>(
               builder: (context, state, child) {
-                return Consumer<ProfileViewModel>(
-                  builder: (context, data, child) {
-                    data.getProfile();
-                    return state.state == ViewState.Idle
-                        ? profileMode.state == ProfileMode.user
-                            ? UserProfile()
-                            : EditProfile()
-                        : CircularProgressIndicator();
-                  },
-                );
+                print(state.getState);
+                return state.getState == ViewState.Idle
+                    ? profileMode.state == ProfileMode.user
+                        ? UserProfile()
+                        : EditProfile()
+                    : CircularProgressIndicator();
               },
             ),
           ),
@@ -74,9 +76,6 @@ class UserProfile extends StatelessWidget {
               ?.map((instrument) => InstrumentItem(instrument: instrument))
               ?.toList() ??
           [];
-      // Cuando getProfile viene de una promesa (Future en api) hay que contemplar la posibilidad de que venga un null para hacer el map
-      //data.getSyncProfile();
-      data.getProfile();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -109,7 +108,6 @@ class _EditProfile extends State<EditProfile> {
     return Container(
       child: Consumer<ProfileViewModel>(
         builder: (context, data, child) {
-          data.getProfile();
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

@@ -5,10 +5,11 @@ enum ViewState { Idle, Busy }
 class StateViewModel extends ChangeNotifier {
   ViewState _state = ViewState.Idle;
 
-  ViewState get state => _state;
+  ViewState get getState => _state;
 
-  void setState(ViewState viewState) {
-    _state = viewState;
+  void setState(ViewState state) {
+    _state = state;
+    print('State ViewModel:');
     print(_state);
     notifyListeners();
   }

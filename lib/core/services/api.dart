@@ -18,13 +18,10 @@ var mockPiedPipers = {
 var profile = Profile.fromJson(mockPiedPipers);
 
 class Api {
+
   Future<Profile> getProfile() async {
-    await Future.delayed(const Duration(seconds: 4), (){});
+    //await Future.delayed(const Duration(seconds: 4), (){});
     return profile;
   }
 
-
-  getProfileSync() {
-    return profile;
-  }
 }
