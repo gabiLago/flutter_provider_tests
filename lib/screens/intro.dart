@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider_textfield_tests/screens/views/base_view.dart';
 
 class Intro extends StatelessWidget {
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_textfield_tests/core/viewmodel/state_viewmodel.dart';
 import 'package:provider_textfield_tests/screens/views/widgets/edit/instruments_list.dart';
 import 'package:provider_textfield_tests/core/viewmodel/profile_viewmodel.dart';
 
@@ -18,7 +17,6 @@ class _EditProfile extends State<EditProfile> {
   void _save() {
     print('_save');
     Provider.of<ProfileViewModel>(context, listen: false).updateInstrumentsList();
-    //FocusScope.of(context).requestFocus(FocusNode());
     Navigator.pushNamed(context, 'profile');
   }
 

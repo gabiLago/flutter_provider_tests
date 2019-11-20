@@ -58,6 +58,7 @@ class ProfileViewModel extends ChangeNotifier {
     viewState.setState(ViewState.Busy);
     instrumentsToRemoveList.map((String instrument) => profile.instruments.remove(instrument)).toList();
     viewState.setState(ViewState.Idle);
+    print('Update');
     print(profile.instruments);
     notifyListeners();
   }

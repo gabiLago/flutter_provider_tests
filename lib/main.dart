@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_textfield_tests/core/viewmodel/profile_mode_viewmodel.dart';
 import 'package:provider_textfield_tests/core/viewmodel/state_viewmodel.dart';
-
-import 'package:provider_textfield_tests/screens/route.dart';
-import 'package:provider_textfield_tests/screens/views/base_view.dart';
 import 'package:provider_textfield_tests/core/viewmodel/profile_viewmodel.dart';
+import 'package:provider_textfield_tests/screens/route.dart';
+
 
 void main() {
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(builder: (context) => ProfileViewModel()),
       ChangeNotifierProvider(builder: (context) => StateViewModel()),
+      ChangeNotifierProvider(builder: (context) => ProfileModeViewModel()),
     ], child: MyApp()),
   );
 }
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      initialRoute: 'intro',
+      initialRoute: 'profile',
       onGenerateRoute: Router.generateRoute,
     );
   }

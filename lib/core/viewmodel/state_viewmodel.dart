@@ -9,6 +9,7 @@ class StateViewModel extends ChangeNotifier {
 
   void setState(ViewState viewState) {
     _state = viewState;
+    print(_state);
     notifyListeners();
   }
 }
